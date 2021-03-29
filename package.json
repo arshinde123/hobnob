@@ -10,7 +10,7 @@
     "watch": "nodemon -w src --exec yarn run serve",
     "fix": "yarn run eslint src --fix",
     "lint": "yarn run eslint src",
-    "precommit": "yarn run lint"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
