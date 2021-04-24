@@ -1,5 +1,55 @@
 {
+<<<<<<< HEAD
   "devDependencies": {
     "@babel/node": "^7.13.13"
+=======
+  "name": "hobnob",
+  "version": "0.1.0",
+  "description": "hobnob search directory",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf dist/ && babel src -d dist",
+    "serve": "yarn run build && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon -w src --exec yarn run serve",
+    "fix": "yarn run eslint src --fix",
+    "lint": "yarn run eslint src",
+    "prepare": "husky install",
+    "test:e2e": "cucumber-js spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arshinde123/hobnob.git"
+  },
+  "keywords": [
+    "javascript",
+    "nodejs"
+  ],
+  "author": "Arvind Shinde <arshinde123.2013@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arshinde123/hobnob/issues"
+  },
+  "homepage": "https://github.com/arshinde123/hobnob#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.13",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/register": "^7.13.14",
+    "@cucumber/cucumber": "^7.1.0",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^6.0.0",
+    "ndb": "^1.1.5",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "superagent": "^6.1.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1"
+>>>>>>> create-user/main
   }
 }
