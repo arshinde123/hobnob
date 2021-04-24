@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "devDependencies": {
-    "@babel/node": "^7.13.13"
-=======
   "name": "hobnob",
   "version": "0.1.0",
   "description": "hobnob search directory",
@@ -50,6 +46,5 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1"
->>>>>>> create-user/main
   }
 }
