@@ -7,5 +7,10 @@
                 }
             }
         ]
-    ]
+    ],
+    "env": {
+        "debug": {
+            "retainLines": true
+        }
+    }
 }
