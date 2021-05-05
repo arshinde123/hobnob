@@ -5,62 +5,58 @@ const { When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
 
 setDefaultTimeout(60 * 100);
 
-When('the client creates a POST request to \\/users', function (callback) {
-    this.request = superagent('POST', `${process.env.SERVER_HOSTNAME}:${process.env.SERVER_PORT}/users`);
-    callback();
+When(/^the client creates a (GET|POST|PATCH|PUT|DELETE|OPTIONS|HEAD) request to ([/\w-:.]+)$/, function (method, path) {
+    this.request = superagent(method, `${process.env.SERVER_HOSTNAME}:${process.env.SERVER_PORT}${path}`);
+});
+  
+When(/^attaches a generic (.+) payload$/, function (payloadType) {
+    switch (payloadType) {
+        case 'malformed':
+            this.request
+                .send('{"email": "dan@danyll.com", name: }')
+                .set('Content-Type', 'application/json');
+            break;
+        case 'non-JSON':
+            this.request
+                .send('<?xml version="1.0" encoding="UTF-8" ?><email>dan@danyll.com</email>')
+                .set('Content-Type', 'text/xml');
+            break;
+        case 'empty':
+        default:
+}
 });
 
-When('attaches a generic empty payload', function (callback) {
-    callback ();
-    return undefined;
-});
-
-When('sends the request', function (callback) {
+When(/^sends the request$/, function (callback) {
     this.request
         .then((response) => {
-            this.response = response.res;
-            callback();
+        this.response = response.res;
+        callback();
         })
-        .catch((errResponse) => {
-            this.response = errResponse.response;
-            callback();
+        .catch((error) => {
+        this.response = error.response;
+        callback();
         });
 });
 
-Then('API should respond with a 400 HTTP status code', function (callback) {
-    assert.strictEqual(this.response.statusCode, 400);
-    callback();
+Then(/^our API should respond with a ([1-5]\d{2}) HTTP status code$/, function (statusCode) {
+    assert.equal(this.response.statusCode, statusCode);
 });
 
-Then('the payload of the response should be a JSON object', function (callback) {
+Then(/^the payload of the response should be a JSON object$/, function () {
     // Check Content-Type header
-    const contentType = this.response.headers['Content-Type'] || this.response.headers['content-type']
+    const contentType = this.response.headers['Content-Type'] || this.response.headers['content-type'];
     if (!contentType || !contentType.includes('application/json')) {
-        throw new AssertionError({
-            expected: 'application/json',
-            actual: contentType,
-            operator: 'expected to be'
-        });
+        throw new Error('Response not of Content-Type application/json');
     }
 
-    // Check it is valid json
+    // Check it is valid JSON
     try {
         this.responsePayload = JSON.parse(this.response.text);
-    } catch(e) {
-        throw new AssertionError({
-            expected: 'Valid JSON response',
-            actual: 'Invalid or not a JSON response',
-            operator: 'expected to be'
-        });
+    } catch (e) {
+        throw new Error('Response not a valid JSON object');
     }
-
-    callback();
 });
 
-Then('contains a message property which says "Payload should not be empty"', function (callback) {
-    assert.strictEqual(this.responsePayload.message, "Payload should not be empty");
-    // if (this.responsePayload.message !== "Payload should not be empty") {
-    //     throw new Error('Incorrect error message');
-    // }
-    callback();
+Then(/^contains a message property which says (?:"|')(.*)(?:"|')$/, function (message) {
+    assert.equal(this.responsePayload.message, message);
 });
