@@ -45,8 +45,12 @@
     "superagent": "^6.1.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@babel/polyfill": "^7.12.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1"
+=======
+    "@babel/polyfill": "^7.12.1"
+>>>>>>> 40d27fc9bbdc13db6706d727442240ce22bc6c8e
   }
 }
