@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/arvind/.nvm/versions/node/v14.16.0/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js run serve
+  /Users/arvind/.nvm/versions/node/v14.16.0/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js run test:e2e
 
 PATH: 
-  /Users/arvind/Desktop/coding/Building enterprise javascript application/hobnob/node_modules/.bin:/var/folders/fl/wwpq1kqn7k141x80xkv_r52r0000gn/T/yarn--1620447773251-0.9226390255648764:/Users/arvind/Desktop/coding/Building enterprise javascript application/hobnob/node_modules/.bin:/Users/arvind/.config/yarn/link/node_modules/.bin:/Users/arvind/.nvm/versions/node/v14.16.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/arvind/.nvm/versions/node/v14.16.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/arvind/.nvm/versions/node/v14.16.0/bin/node_modules/npm/bin/node-gyp-bin:/Users/arvind/.nvm/versions/node/v14.16.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /Users/arvind/.nvm/versions/node/v14.16.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
   1.22.10
