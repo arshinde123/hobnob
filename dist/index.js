@@ -87,6 +87,15 @@ app.post('/users', (req, res, next) => {
     return;
   }
 
+  if (!/^[\w.+]+@\w+\.\w+$/.test(req.body.email)) {
+    res.status(400);
+    res.set('Content-Type', 'application/json');
+    res.json({
+      message: 'The email field must be a valid email.'
+    });
+    return;
+  }
+
   next();
 });
 app.use((err, req, res, next) => {
