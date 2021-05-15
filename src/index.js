@@ -1,5 +1,10 @@
 import express from 'express';
-// import bodyParser from 'body-parser';
+import { Client } from 'elasticsearch';
+
+const client = Client({
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  log: 'trace',
+});
 
 const app = express();
 
@@ -90,7 +95,20 @@ app.post('/users', (req, res, next) => {
     res.json({ message: 'The email field must be a valid email.' });
     return;
   }
-  next();
+
+  client.index({
+    index: 'hobnob',
+    // type: 'user',
+    body: req.body,
+  }).then((result) => {
+    res.status(201);
+    res.set('Content-Type', 'text/plain');
+    res.send(result._id);
+  }).catch(() => {
+    res.status(500);
+    res.set('Content-Type', 'application/json');
+    res.json({ message: 'Internal Server Error' });
+  });
 });
 
 app.use((err, req, res, next) => {

@@ -2,9 +2,14 @@
 
 var _express = _interopRequireDefault(require("express"));
 
+var _elasticsearch = require("elasticsearch");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import bodyParser from 'body-parser';
+const client = (0, _elasticsearch.Client)({
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  log: 'trace'
+});
 const app = (0, _express.default)();
 
 function checkEmptyPayload(req, res, next) {
@@ -96,7 +101,21 @@ app.post('/users', (req, res, next) => {
     return;
   }
 
-  next();
+  client.index({
+    index: 'hobnob',
+    // type: 'user',
+    body: req.body
+  }).then(result => {
+    res.status(201);
+    res.set('Content-Type', 'text/plain');
+    res.send(result._id);
+  }).catch(() => {
+    res.status(500);
+    res.set('Content-Type', 'application/json');
+    res.json({
+      message: 'Internal Server Error'
+    });
+  });
 });
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err && err.type === 'entity.parse.failed') {
